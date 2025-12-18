@@ -15,10 +15,12 @@ function Home() {
   const fetchFeaturedProducts = async () => {
     try {
       const response = await axios.get('/api/products?featured=true');
-      setFeaturedProducts(response.data.slice(0, 3));
+      const products = Array.isArray(response.data) ? response.data : [];
+      setFeaturedProducts(products.slice(0, 3));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching products:', error);
+      setFeaturedProducts([]); // Ensure it's always an array
       setLoading(false);
     }
   };

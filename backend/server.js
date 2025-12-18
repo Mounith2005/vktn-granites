@@ -17,7 +17,11 @@ const app = express();
 // CORS Configuration
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://vktn-granites.vercel.app', 'https://www.vktngranites.com'] // Update with your actual domain
+    ? [
+        'https://vktn-granites.vercel.app',
+        'https://vktn-granites-78b95l1lo-mouniths-projects-3191ace4.vercel.app',
+        /^https:\/\/vktn-granites-.*\.vercel\.app$/
+      ]
     : ['http://localhost:3000', 'http://localhost:3001'],
   credentials: true,
   optionsSuccessStatus: 200

@@ -23,11 +23,14 @@ function Products() {
   const fetchProducts = async () => {
     try {
       const response = await axios.get('/api/products');
-      setProducts(response.data);
-      setFilteredProducts(response.data);
+      const productsData = Array.isArray(response.data) ? response.data : [];
+      setProducts(productsData);
+      setFilteredProducts(productsData);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching products:', error);
+      setProducts([]);
+      setFilteredProducts([]);
       setLoading(false);
     }
   };
