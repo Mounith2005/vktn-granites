@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # VKTN Granites Application
+  app:
+    build: .
+    container_name: vktn-granites
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - vktn-network
+
+  # Nginx Reverse Proxy (Optional)
+  nginx:
+    image: nginx:alpine
+    container_name: vktn-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - app
+    networks:
+      - vktn-network
+
+networks:
+  vktn-network:
+    driver: bridge
