@@ -1,0 +1,50 @@
+═══════════════════════════════════════════════════════════
+    VKTN GRANITES - ADMIN PORTAL ACCESS CREDENTIALS
+═══════════════════════════════════════════════════════════
+
+🔐 CONFIDENTIAL - FOR AUTHORIZED PERSONNEL ONLY
+
+-----------------------------------------------------------
+ADMIN LOGIN URL
+-----------------------------------------------------------
+Local:      http://localhost:3000/admin-login
+Production: https://vktn-granites.vercel.app/admin-login
+
+-----------------------------------------------------------
+DEFAULT ADMIN CREDENTIALS
+-----------------------------------------------------------
+Email:    admin@vktngranites.com
+Password: admin123
+
+-----------------------------------------------------------
+SECURITY NOTES
+-----------------------------------------------------------
+1. Change the default password immediately after first login
+2. Do NOT share these credentials with unauthorized users
+3. The admin portal is NOT linked on the public website
+4. Bookmark the admin URL for easy access
+5. Keep this file secure and confidential
+
+-----------------------------------------------------------
+ADMIN CAPABILITIES
+-----------------------------------------------------------
+✓ View all customer orders
+✓ Update order status
+✓ View order statistics
+✓ Manage temple granite orders
+✓ Access customer information
+✓ Track order history
+
+-----------------------------------------------------------
+FIRST TIME SETUP
+-----------------------------------------------------------
+1. Run: npm run create-admin
+2. Navigate to admin login URL
+3. Login with credentials above
+4. Change password in MongoDB Atlas
+5. Bookmark the admin portal URL
+
+═══════════════════════════════════════════════════════════
+Last Updated: December 2025
+Version: 1.0.0 - Professional Admin System
+═══════════════════════════════════════════════════════════

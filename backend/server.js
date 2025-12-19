@@ -11,6 +11,7 @@ dotenv.config();
 const productRoutes = require('./routes/products');
 const inquiryRoutes = require('./routes/inquiries');
 const authRoutes = require('./routes/auth');
+const orderRoutes = require('./routes/orders');
 
 const app = express();
 
@@ -49,6 +50,7 @@ mongoose.connect(MONGODB_URI, {
 app.use('/api/products', productRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {

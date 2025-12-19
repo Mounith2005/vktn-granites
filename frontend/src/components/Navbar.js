@@ -51,13 +51,6 @@ function Navbar() {
             Home
           </Link>
           <Link 
-            to="/products" 
-            className={`navbar-link ${location.pathname === '/products' ? 'active' : ''}`}
-            onClick={closeMenu}
-          >
-            Products
-          </Link>
-          <Link 
             to="/about" 
             className={`navbar-link ${location.pathname === '/about' ? 'active' : ''}`}
             onClick={closeMenu}
@@ -72,12 +65,47 @@ function Navbar() {
             Contact
           </Link>
           
+          {user && (
+            <>
+              {user.role === 'admin' ? (
+                <Link 
+                  to="/admin" 
+                  className={`navbar-link ${location.pathname === '/admin' ? 'active' : ''}`}
+                  onClick={closeMenu}
+                >
+                  Admin Dashboard
+                </Link>
+              ) : (
+                <>
+                  <Link 
+                    to="/place-order" 
+                    className={`navbar-link ${location.pathname === '/place-order' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    Place Order
+                  </Link>
+                  <Link 
+                    to="/my-orders" 
+                    className={`navbar-link ${location.pathname === '/my-orders' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    My Orders
+                  </Link>
+                </>
+              )}
+            </>
+          )}
+          
           {user ? (
             <>
-              <span className="navbar-user">
+              <Link 
+                to={user.role === 'admin' ? '/admin-profile' : '/profile'}
+                className={`navbar-user ${location.pathname === '/profile' || location.pathname === '/admin-profile' ? 'active' : ''}`}
+                onClick={closeMenu}
+              >
                 <User size={18} />
                 {user.name}
-              </span>
+              </Link>
               <button onClick={handleLogout} className="navbar-logout">
                 <LogOut size={18} />
                 Logout
@@ -85,7 +113,7 @@ function Navbar() {
             </>
           ) : (
             <Link 
-              to="/login" 
+              to="/login-select" 
               className="navbar-login"
               onClick={closeMenu}
             >

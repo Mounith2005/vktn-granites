@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../api/axios';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import './Contact.css';
 
@@ -10,14 +10,14 @@ function Contact() {
     phone: '',
     subject: '',
     message: '',
-    productInterest: 'General Inquiry'
+    inquiryType: 'General Inquiry'
   });
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  const productOptions = [
+  const inquiryOptions = [
     'General Inquiry',
     'Temple Granite',
     'Kitchen Countertop',
@@ -49,7 +49,7 @@ function Contact() {
         phone: '',
         subject: '',
         message: '',
-        productInterest: 'General Inquiry'
+        inquiryType: 'General Inquiry'
       });
       
       // Hide success message after 5 seconds
@@ -81,7 +81,7 @@ function Contact() {
             <div className="contact-info">
               <h2>Get In Touch</h2>
               <p className="contact-intro">
-                Have questions about our granite products? We're here to help! 
+                Have questions about our granite services? We're here to help! 
                 Reach out to us through any of the following channels or fill out 
                 the contact form.
               </p>
@@ -93,7 +93,7 @@ function Contact() {
                   </div>
                   <div className="contact-text">
                     <h4>Visit Us</h4>
-                    <p>123 Granite Street<br />Stone City, India - 560001</p>
+                    <p>No 3/6a, Salem to Namakkal Bypass Road<br />Masakalipatti Bus Stop, Masakalipatti<br />Namakkal - 637401, Tamil Nadu</p>
                   </div>
                 </div>
 
@@ -103,7 +103,7 @@ function Contact() {
                   </div>
                   <div className="contact-text">
                     <h4>Call Us</h4>
-                    <p>+91 98765 43210<br />+91 98765 43211</p>
+                    <p>Available 24 Hours<br />Contact for inquiries</p>
                   </div>
                 </div>
 
@@ -113,7 +113,7 @@ function Contact() {
                   </div>
                   <div className="contact-text">
                     <h4>Email Us</h4>
-                    <p>info@templegranites.com<br />sales@templegranites.com</p>
+                    <p>info@vktngranites.com<br />sales@vktngranites.com</p>
                   </div>
                 </div>
               </div>
@@ -122,16 +122,12 @@ function Contact() {
                 <h3>Business Hours</h3>
                 <div className="hours-list">
                   <div className="hours-item">
-                    <span>Monday - Friday</span>
-                    <span>9:00 AM - 6:00 PM</span>
+                    <span>Open 24 Hours</span>
+                    <span>All Days</span>
                   </div>
                   <div className="hours-item">
-                    <span>Saturday</span>
-                    <span>9:00 AM - 4:00 PM</span>
-                  </div>
-                  <div className="hours-item">
-                    <span>Sunday</span>
-                    <span>Closed</span>
+                    <span>GSTIN</span>
+                    <span>33AAGFV6548Q1ZE</span>
                   </div>
                 </div>
               </div>
@@ -198,14 +194,14 @@ function Contact() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="productInterest">Product Interest</label>
+                    <label htmlFor="inquiryType">Inquiry Type</label>
                     <select
-                      id="productInterest"
-                      name="productInterest"
-                      value={formData.productInterest}
+                      id="inquiryType"
+                      name="inquiryType"
+                      value={formData.inquiryType}
                       onChange={handleChange}
                     >
-                      {productOptions.map((option) => (
+                      {inquiryOptions.map((option) => (
                         <option key={option} value={option}>
                           {option}
                         </option>
@@ -262,7 +258,7 @@ function Contact() {
           <div className="map-container">
             <iframe
               title="VKTN Granites Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0!2d77.5946!3d12.9716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU4JzE3LjgiTiA3N8KwMzUnNDAuNiJF!5e0!3m2!1sen!2sin!4v1234567890"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3910.0!2d78.1667!3d11.2167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDEzJzAwLjEiTiA3OMKwMTAnMDAuMSJF!5e0!3m2!1sen!2sin!4v1234567890"
               width="100%"
               height="450"
               style={{ border: 0, borderRadius: '12px' }}

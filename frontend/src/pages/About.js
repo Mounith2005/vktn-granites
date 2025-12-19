@@ -21,27 +21,29 @@ function About() {
             <div className="story-grid">
               <div className="story-image">
                 <img 
-                  src="https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=800" 
-                  alt="Temple Granite Workshop" 
+                  src="/images/unnamed.webp" 
+                  alt="VKTN Granites Workshop" 
                 />
               </div>
               <div className="story-text">
                 <h2>Our Story</h2>
                 <p>
-                  VKTN Granites was founded with a vision to provide the finest quality granite 
-                  for temples, homes, and commercial spaces. With over 25 years of experience in 
-                  the industry, we have established ourselves as a trusted name in premium granite 
-                  supply and craftsmanship.
+                  V K T N GRANITES & TEMPLE STONES is a leading supplier of premium quality granite 
+                  and temple stones located in Masakalipatti, Namakkal, Tamil Nadu. We specialize in 
+                  stone god statues, granite statues, temple stones, and various granite works for 
+                  religious and architectural applications.
                 </p>
                 <p>
-                  Our journey began with a small workshop and a commitment to quality. Today, we 
-                  serve clients across India, delivering exceptional granite products that combine 
-                  traditional craftsmanship with modern technology.
+                  Operating 24 hours to serve our customers, we are committed to providing the finest 
+                  quality materials for temples, monuments, and spiritual structures across Tamil Nadu 
+                  and beyond. Our expertise includes stone columns, elevation tiles, and custom granite 
+                  work tailored to your specific requirements.
                 </p>
                 <p>
-                  Every piece of granite we supply is carefully selected and processed to meet the 
-                  highest standards of quality, durability, and aesthetic appeal. Our team of skilled 
-                  artisans brings decades of expertise to every project.
+                  Located on the Salem to Namakkal Bypass Road, our facility is easily accessible and 
+                  equipped to handle projects of all sizes. Every piece of granite we supply is carefully 
+                  selected and crafted to meet the highest standards of quality, durability, and spiritual 
+                  significance.
                 </p>
               </div>
             </div>
@@ -166,7 +168,7 @@ function About() {
                 <CheckCircle size={24} className="check-icon" />
                 <div>
                   <h4>Competitive Pricing</h4>
-                  <p>Best value for premium quality granite products</p>
+                  <p>Best value for premium quality granite materials</p>
                 </div>
               </div>
               <div className="reason-item">
@@ -195,7 +197,7 @@ function About() {
                 <Target size={48} />
                 <h3>Our Mission</h3>
                 <p>
-                  To provide the highest quality granite products and services that exceed 
+                  To provide the highest quality granite materials and services that exceed 
                   our clients' expectations, while maintaining integrity, craftsmanship, and 
                   innovation in everything we do.
                 </p>

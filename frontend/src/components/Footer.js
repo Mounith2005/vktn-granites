@@ -36,23 +36,12 @@ function Footer() {
           {/* Quick Links */}
           <div className="footer-section">
             <h3 className="footer-title">Quick Links</h3>
-            <ul className="footer-links">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/products">Products</Link></li>
-              <li><Link to="/about">About Us</Link></li>
-              <li><Link to="/contact">Contact</Link></li>
-            </ul>
-          </div>
-
-          {/* Products */}
-          <div className="footer-section">
-            <h3 className="footer-title">Our Products</h3>
-            <ul className="footer-links">
-              <li><a href="#temple">Temple Granite</a></li>
-              <li><a href="#kitchen">Kitchen Countertops</a></li>
-              <li><a href="#flooring">Flooring</a></li>
-              <li><a href="#monuments">Monuments</a></li>
-            </ul>
+            <div className="footer-section">
+              <h3>Quick Links</h3>
+              <Link to="/">Home</Link>
+              <Link to="/about">About Us</Link>
+              <Link to="/contact">Contact</Link>
+            </div>
           </div>
 
           {/* Contact Info */}
@@ -61,15 +50,15 @@ function Footer() {
             <div className="footer-contact">
               <div className="contact-item">
                 <MapPin size={18} />
-                <span>123 Granite Street, Stone City, India</span>
+                <span>No 3/6a, Salem to Namakkal Bypass Road, Masakalipatti, Namakkal - 637401</span>
               </div>
               <div className="contact-item">
                 <Phone size={18} />
-                <span>+91 98765 43210</span>
+                <span>Open 24 Hours</span>
               </div>
               <div className="contact-item">
                 <Mail size={18} />
-                <span>info@templegranites.com</span>
+                <span>info@vktngranites.com</span>
               </div>
             </div>
           </div>

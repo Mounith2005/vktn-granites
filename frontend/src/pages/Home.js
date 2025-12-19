@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { ArrowRight, CheckCircle, Star, Award, Users, Sparkles } from 'lucide-react';
+import Gallery from '../components/Gallery';
+import realImages from '../data/realImages';
 import './Home.css';
 
 function Home() {
-  const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchFeaturedProducts();
-  }, []);
-
-  const fetchFeaturedProducts = async () => {
-    try {
-      const response = await axios.get('/api/products?featured=true');
-      const products = Array.isArray(response.data) ? response.data : [];
-      setFeaturedProducts(products.slice(0, 3));
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      setFeaturedProducts([]); // Ensure it's always an array
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="home">
       {/* Hero Section */}
@@ -38,11 +19,11 @@ function Home() {
             Crafting Divine Spaces with Timeless Elegance and Unmatched Quality
           </p>
           <div className="hero-buttons fade-in">
-            <Link to="/products" className="btn btn-gold">
-              Explore Products <ArrowRight size={20} />
+            <Link to="/contact" className="btn btn-gold">
+              Get Quote <ArrowRight size={20} />
             </Link>
-            <Link to="/contact" className="btn btn-secondary">
-              Get Quote
+            <Link to="/about" className="btn btn-secondary">
+              Learn More
             </Link>
           </div>
         </div>
@@ -90,7 +71,7 @@ function Home() {
           <div className="about-preview-grid">
             <div className="about-preview-image">
               <img 
-                src="https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=800" 
+                src="/images/unnamed.webp" 
                 alt="Temple Granite" 
               />
             </div>
@@ -123,58 +104,8 @@ function Home() {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="featured-products">
-        <div className="container">
-          <h2 className="section-title">Featured Products</h2>
-          <p className="section-subtitle">
-            Discover our premium collection of temple granites
-          </p>
-          
-          {loading ? (
-            <div className="loading">Loading products...</div>
-          ) : (
-            <div className="products-grid">
-              {featuredProducts.length > 0 ? (
-                featuredProducts.map((product) => (
-                  <div key={product._id} className="product-card card">
-                    <div className="product-image">
-                      <img src={product.imageUrl} alt={product.name} />
-                      <div className="product-badge">
-                        <Star size={16} fill="currentColor" />
-                        Featured
-                      </div>
-                    </div>
-                    <div className="product-info">
-                      <h3>{product.name}</h3>
-                      <p className="product-category">{product.category}</p>
-                      <p className="product-description">{product.description}</p>
-                      <div className="product-footer">
-                        <span className="product-price">
-                          ₹{product.price} {product.priceUnit}
-                        </span>
-                        <span className={`product-stock ${product.inStock ? 'in-stock' : 'out-stock'}`}>
-                          {product.inStock ? 'In Stock' : 'Out of Stock'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="no-products">
-                  <p>No featured products available at the moment.</p>
-                </div>
-              )}
-            </div>
-          )}
-          
-          <div className="view-all">
-            <Link to="/products" className="btn btn-primary">
-              View All Products <ArrowRight size={20} />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Gallery Section */}
+      <Gallery />
 
       {/* CTA Section */}
       <section className="cta-section">

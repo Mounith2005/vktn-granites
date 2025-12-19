@@ -1,6 +1,6 @@
 .footer {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: white;
+  color: rgb(254, 244, 244);
   margin-top: auto;
   padding: 4rem 0 2rem;
 }
@@ -96,7 +96,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(171, 42, 42, 0.8);
   line-height: 1.6;
 }
 
