@@ -113,7 +113,7 @@ function Contact() {
                   </div>
                   <div className="contact-text">
                     <h4>Email Us</h4>
-                    <p>info@vktngranites.com<br />sales@vktngranites.com</p>
+                    <p>vktngranites@gmail.com<br />sales@vktngranites.com</p>
                   </div>
                 </div>
               </div>
