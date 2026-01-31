@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Mountain, User, LogOut } from 'lucide-react';
+import { Menu, X, Mountain, User, LogOut, Shield } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
@@ -112,14 +112,24 @@ function Navbar() {
               </button>
             </>
           ) : (
-            <Link 
-              to="/login-select" 
-              className="navbar-login"
-              onClick={closeMenu}
-            >
-              <User size={18} />
-              Login
-            </Link>
+            <div className="navbar-login-group">
+              <Link 
+                to="/login" 
+                className="navbar-login user-login"
+                onClick={closeMenu}
+              >
+                <User size={18} />
+                User Login
+              </Link>
+              <Link 
+                to="/admin-login" 
+                className="navbar-login admin-login"
+                onClick={closeMenu}
+              >
+                <Shield size={18} />
+                Admin Login
+              </Link>
+            </div>
           )}
         </div>
 
