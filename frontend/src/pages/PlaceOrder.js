@@ -3,8 +3,81 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from '../api/axios';
 import { Plus, Trash2, ShoppingCart, AlertCircle, Copy, Layers } from 'lucide-react';
-import { UNITS, calculateRunningFeet } from '../utils/unitConverter';
+import { UNITS } from '../utils/unitConverter';
 import './PlaceOrder.css';
+
+// Common granite item names for dropdown
+const GRANITE_ITEMS = [
+  'பலகை',
+  'உத்திரம் ',
+  'கபோதகம்',
+  'யாழன்',
+  'உள்வரி',
+  'பெரிய உத்திரம்',
+  'கதவாடி கல்',
+  'கோன் வட்டம்',
+  'பாவுகள்',
+  'சுருள் படி',
+  'படி',
+  'கோமுதை',
+  'தளவரிசை',
+];
+
+// Interactive 3D Box Component
+function Box3D({ length, width, height, rotateX, rotateY }) {
+  const scale = 20; // Exact 1:1 scale for actual dimensions
+  const L = length * scale;
+  const W = width * scale;
+  const H = height * scale;
+  const startX = 100; // Center position for exact size
+  const startY = 400;
+
+  return (
+    <svg width="900" height="900">
+      <g
+        transform={`
+          rotate(${rotateY}, 500, 350)
+          rotate(${rotateX}, 500, 350)
+        `}
+      >
+        {/* Front face */}
+        <rect
+          x={startX}
+          y={startY - H}
+          width={L}
+          height={H}
+          fill="#2ae216"
+          stroke="black"
+          strokeWidth="2"
+        />
+        {/* Top face */}
+        <polygon
+          points={`
+            ${startX},${startY - H}
+            ${startX + W},${startY - H - W}
+            ${startX + L + W},${startY - H - W}
+            ${startX + L},${startY - H}
+          `}
+          fill="#2ae216"
+          stroke="black"
+          strokeWidth="2"
+        />
+        {/* Side face */}
+        <polygon
+          points={`
+            ${startX + L},${startY - H}
+            ${startX + L + W},${startY - H - W}
+            ${startX + L + W},${startY - W}
+            ${startX + L},${startY}
+          `}
+          fill="#738271"
+          stroke="black"
+          strokeWidth="2"
+        />
+      </g>
+    </svg>
+  );
+}
 
 function PlaceOrder() {
   const { user } = useAuth();
@@ -18,14 +91,43 @@ function PlaceOrder() {
     notes: ''
   });
 
+  // 3D Box rotation state
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const [lastX, setLastX] = useState(0);
+  const [lastY, setLastY] = useState(0);
+
+  // Mouse interaction handlers for 3D rotation
+  const handleMouseDown = (e) => {
+    setDragging(true);
+    setLastX(e.clientX);
+    setLastY(e.clientY);
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    setRotateY(prev => prev + dx * 0.5);
+    setRotateX(prev => prev + dy * 0.5);
+    setLastX(e.clientX);
+    setLastY(e.clientY);
+  };
+
   const [items, setItems] = useState([
     { 
       itemName: '', 
-      itemNameTamil: '', 
       length: '', 
       width: '', 
+      height: '',
       lengthUnit: UNITS.INCHES,
       widthUnit: UNITS.INCHES,
+      heightUnit: UNITS.INCHES,
       runningFeet: 0, 
       notes: '' 
     }
@@ -45,33 +147,18 @@ function PlaceOrder() {
   const handleItemChange = (index, field, value) => {
     const newItems = [...items];
     newItems[index][field] = value;
-    
-    // Auto-calculate running feet when length or width changes
-    if (field === 'length' || field === 'width' || field === 'lengthUnit' || field === 'widthUnit') {
-      const item = newItems[index];
-      if (item.length && item.width) {
-        item.runningFeet = calculateRunningFeet(
-          item.length, 
-          item.lengthUnit || UNITS.INCHES,
-          item.width, 
-          item.widthUnit || UNITS.INCHES
-        );
-      } else {
-        item.runningFeet = 0;
-      }
-    }
-    
     setItems(newItems);
   };
 
   const addItem = () => {
     setItems([...items, { 
       itemName: '', 
-      itemNameTamil: '', 
       length: '', 
       width: '', 
+      height: '',
       lengthUnit: UNITS.INCHES,
       widthUnit: UNITS.INCHES,
+      heightUnit: UNITS.INCHES,
       runningFeet: 0, 
       notes: '' 
     }]);
@@ -80,11 +167,12 @@ function PlaceOrder() {
   const addMultipleItems = (count = 5) => {
     const newItems = Array(count).fill(null).map(() => ({
       itemName: '', 
-      itemNameTamil: '', 
       length: '', 
       width: '', 
+      height: '',
       lengthUnit: UNITS.INCHES,
       widthUnit: UNITS.INCHES,
+      heightUnit: UNITS.INCHES,
       runningFeet: 0, 
       notes: '' 
     }));
@@ -110,10 +198,6 @@ function PlaceOrder() {
     }
   };
 
-  const calculateTotalRunningFeet = () => {
-    return items.reduce((sum, item) => sum + (parseFloat(item.runningFeet) || 0), 0);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -128,11 +212,20 @@ function PlaceOrder() {
     }
 
     const validItems = items.filter(item => 
-      item.itemName.trim() && item.length.trim() && item.width.trim() && item.runningFeet > 0
+      item.itemName.trim() && item.width.trim() && 
+      (item.length.trim() || item.runningFeet > 0)
     );
 
     if (validItems.length === 0) {
       setError('Please add at least one valid item');
+      setLoading(false);
+      return;
+    }
+
+    // Check if any item has both length and running feet
+    const conflictingItems = validItems.filter(item => item.length.trim() && item.runningFeet > 0);
+    if (conflictingItems.length > 0) {
+      setError('Some items have both length and running feet. Please provide only one measurement method.');
       setLoading(false);
       return;
     }
@@ -268,9 +361,9 @@ function PlaceOrder() {
                 <div className="table-header">
                   <span className="col-sno">#</span>
                   <span className="col-item">Item Name</span>
-                  <span className="col-item-tamil">Item (Tamil)</span>
                   <span className="col-dimension">Length</span>
                   <span className="col-dimension">Width</span>
+                  <span className="col-dimension">Height</span>
                   <span className="col-running">Running Feet</span>
                   <span className="col-notes">Notes</span>
                   <span className="col-action">Actions</span>
@@ -279,20 +372,16 @@ function PlaceOrder() {
               {items.map((item, index) => (
                 <div key={index} className="table-row">
                   <span className="col-sno">{index + 1}</span>
-                  <input
-                    type="text"
+                  <select
                     className="col-item"
-                    placeholder="Item name"
                     value={item.itemName}
                     onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    className="col-item-tamil"
-                    placeholder="பெயர்"
-                    value={item.itemNameTamil}
-                    onChange={(e) => handleItemChange(index, 'itemNameTamil', e.target.value)}
-                  />
+                  >
+                    <option value="">Select item </option>
+                    {GRANITE_ITEMS.map((itemName, i) => (
+                      <option key={i} value={itemName}>{itemName}</option>
+                    ))}
+                  </select>
                   <div className="col-dimension dimension-input-group">
                     <input
                       type="number"
@@ -326,6 +415,26 @@ function PlaceOrder() {
                       className="unit-select"
                       value={item.widthUnit || UNITS.INCHES}
                       onChange={(e) => handleItemChange(index, 'widthUnit', e.target.value)}
+                    >
+                      <option value={UNITS.INCHES}>in</option>
+                      <option value={UNITS.FEET}>ft</option>
+                      <option value={UNITS.CENTIMETER}>cm</option>
+                      <option value={UNITS.METER}>m</option>
+                    </select>
+                  </div>
+                  <div className="col-dimension dimension-input-group">
+                    <input
+                      type="number"
+                      className="dimension-input"
+                      placeholder="15"
+                      step="0.01"
+                      value={item.height}
+                      onChange={(e) => handleItemChange(index, 'height', e.target.value)}
+                    />
+                    <select
+                      className="unit-select"
+                      value={item.heightUnit || UNITS.INCHES}
+                      onChange={(e) => handleItemChange(index, 'heightUnit', e.target.value)}
                     >
                       <option value={UNITS.INCHES}>in</option>
                       <option value={UNITS.FEET}>ft</option>
@@ -372,11 +481,45 @@ function PlaceOrder() {
               </div>
             </div>
 
-            <div className="total-section">
-              <div className="total-info">
-                <span><strong>{items.length}</strong> {items.length === 1 ? 'item' : 'items'}</span>
-                <span><strong>Total Running Feet: {calculateTotalRunningFeet().toFixed(2)}</strong></span>
-              </div>
+          {/* 3D Item Visualization */}
+          <div 
+            className="form-section"
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            style={{ cursor: dragging ? 'grabbing' : 'grab' }}
+          >
+            <h3>3D Item Visualization (Drag to Rotate)</h3>
+            <div className="form-group" style={{ textAlign: 'center', minHeight: '720px' }}>
+              {items.map((item, index) => {
+                const length = parseFloat(item.length) || 0;
+                const width = parseFloat(item.width) || 0;
+                const height = parseFloat(item.height) || 0;
+                
+                if (length > 0 && width > 0 && height > 0) {
+                  return (
+                    <div key={index} style={{ marginBottom: '20px' }}>
+                      <h4>Item {index + 1}: {item.itemName || 'Unnamed'}</h4>
+                      <p style={{ fontSize: '14px', color: '#666', marginBottom: '10px' }}>
+                        Dimensions: {length}{item.lengthUnit || 'in'} × {width}{item.widthUnit || 'in'} × {height}{item.heightUnit || 'in'}
+                      </p>
+                      <Box3D
+                        length={length}
+                        width={width}
+                        height={height}
+                        rotateX={rotateX}
+                        rotateY={rotateY}
+                      />
+                    </div>
+                  );
+                }
+                return null;
+              })}
+              {!items.some(item => parseFloat(item.length) > 0 && parseFloat(item.width) > 0 && parseFloat(item.height) > 0) && (
+                <div style={{ padding: '40px', color: '#999' }}>
+                  <p>Enter length, width, and height for any item to see 3D visualization</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -392,6 +535,7 @@ function PlaceOrder() {
                 placeholder="Any special instructions or requirements..."
               />
             </div>
+          </div>
           </div>
 
           <div className="form-actions">

@@ -4,8 +4,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 
-// Load environment variables
-dotenv.config();
+// Load environment variables from project root
+dotenv.config({ path: '../.env' });
 
 // Import routes
 const productRoutes = require('./routes/products');
@@ -21,9 +21,11 @@ const corsOptions = {
     ? [
         'https://vktn-granites.vercel.app',
         'https://vktn-granites-78b95l1lo-mouniths-projects-3191ace4.vercel.app',
-        /^https:\/\/vktn-granites-.*\.vercel\.app$/
+        /^https:\/\/vktn-granites-.*\.vercel\.app$/,
+        'https://localhost:3000',
+        'https://localhost:3000'
       ]
-    : ['http://localhost:3000', 'http://localhost:3001'],
+    : ['http://localhost:3000', 'http://localhost:3001', 'https://localhost:3000'],
   credentials: true,
   optionsSuccessStatus: 200
 };

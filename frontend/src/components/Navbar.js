@@ -68,13 +68,15 @@ function Navbar() {
           {user && (
             <>
               {user.role === 'admin' ? (
-                <Link 
-                  to="/admin" 
-                  className={`navbar-link ${location.pathname === '/admin' ? 'active' : ''}`}
-                  onClick={closeMenu}
-                >
-                  Admin Dashboard
-                </Link>
+                <>
+                  <Link 
+                    to="/admin" 
+                    className={`navbar-link ${location.pathname === '/admin' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    Admin Dashboard
+                  </Link>
+                </>
               ) : (
                 <>
                   <Link 

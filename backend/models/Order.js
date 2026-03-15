@@ -12,11 +12,17 @@ const orderItemSchema = new mongoose.Schema({
   },
   length: {
     type: String,
-    required: true
+    required: function() {
+      return !this.runningFeet;
+    }
   },
   width: {
     type: String,
     required: true
+  },
+  height: {
+    type: String,
+    required: false
   },
   lengthUnit: {
     type: String,
@@ -28,9 +34,16 @@ const orderItemSchema = new mongoose.Schema({
     enum: ['ft', 'm', 'cm', 'in'],
     default: 'in'
   },
+  heightUnit: {
+    type: String,
+    enum: ['ft', 'm', 'cm', 'in'],
+    default: 'in'
+  },
   runningFeet: {
     type: Number,
-    required: true
+    required: function() {
+      return !this.length;
+    }
   },
   notes: {
     type: String,

@@ -15,6 +15,21 @@ router.post('/', protect, async (req, res) => {
       return res.status(400).json({ message: 'Order must contain at least one item' });
     }
 
+    // Validate each item has either length or runningFeet
+    for (let item of items) {
+      if (!item.itemName || !item.width) {
+        return res.status(400).json({ message: 'Each item must have itemName and width' });
+      }
+      
+      if (!item.length && !item.runningFeet) {
+        return res.status(400).json({ message: 'Each item must have either length or runningFeet' });
+      }
+      
+      if (item.length && item.runningFeet) {
+        return res.status(400).json({ message: 'Item cannot have both length and runningFeet' });
+      }
+    }
+
     // Calculate total running feet
     const totalRunningFeet = items.reduce((sum, item) => sum + (item.runningFeet || 0), 0);
 

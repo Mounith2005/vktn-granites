@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from '../api/axios';
 import { Package, Clock, CheckCircle, XCircle, Eye, ShoppingCart, Calendar } from 'lucide-react';
-import { formatDimension } from '../utils/unitConverter';
+import { formatDimensionDisplay } from '../utils/unitConverter';
 import './MyOrders.css';
 
 function MyOrders() {
@@ -142,9 +142,14 @@ function MyOrders() {
                       {order.items.slice(0, 3).map((item, index) => {
                         const lengthUnit = item.lengthUnit || 'in';
                         const widthUnit = item.widthUnit || 'in';
+                        const heightUnit = item.heightUnit || 'in';
                         return (
                           <li key={index}>
-                            {item.itemName} ({formatDimension(item.length, lengthUnit)} × {formatDimension(item.width, widthUnit)}) - {item.runningFeet.toFixed(2)} ft
+                            {item.itemName} {
+                              item.length 
+                                ? `(${formatDimensionDisplay(item.length, lengthUnit)} × ${formatDimensionDisplay(item.width, widthUnit)}${item.height ? ` × ${formatDimensionDisplay(item.height, heightUnit)}` : ''})` 
+                                : `(${formatDimensionDisplay(item.width, widthUnit)}${item.height ? ` × ${formatDimensionDisplay(item.height, heightUnit)}` : ''})`
+                            } {item.runningFeet ? `- ${item.runningFeet.toFixed(2)} ft` : ''}
                           </li>
                         );
                       })}
@@ -227,9 +232,9 @@ function MyOrders() {
                       <tr>
                         <th>#</th>
                         <th>Item Name</th>
-                        <th>Tamil Name</th>
                         <th>Length</th>
                         <th>Width</th>
+                        <th>Height</th>
                         <th>Running Feet</th>
                         <th>Notes</th>
                       </tr>
@@ -238,14 +243,15 @@ function MyOrders() {
                       {selectedOrder.items.map((item, index) => {
                         const lengthUnit = item.lengthUnit || 'in';
                         const widthUnit = item.widthUnit || 'in';
+                        const heightUnit = item.heightUnit || 'in';
                         return (
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{item.itemName}</td>
-                            <td>{item.itemNameTamil || '-'}</td>
-                            <td>{formatDimension(item.length, lengthUnit)}</td>
-                            <td>{formatDimension(item.width, widthUnit)}</td>
-                            <td>{item.runningFeet.toFixed(2)} ft</td>
+                            <td>{item.length ? formatDimensionDisplay(item.length, lengthUnit) : '-'}</td>
+                            <td>{formatDimensionDisplay(item.width, widthUnit)}</td>
+                            <td>{item.height ? formatDimensionDisplay(item.height, heightUnit) : '-'}</td>
+                            <td>{item.runningFeet ? item.runningFeet.toFixed(2) + ' ft' : '-'}</td>
                             <td>{item.notes || '-'}</td>
                           </tr>
                         );

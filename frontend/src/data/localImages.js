@@ -29,6 +29,7 @@ export const localImages = {
   // Hero/Banner image
   hero: '/images/unnamed.webp',
   
+  
   // About page image
   about: '/images/unnamed (4).webp',
   

@@ -52,7 +52,7 @@ export const toFeet = (value, unit) => {
 };
 
 /**
- * Format dimension with unit
+ * Format dimension with unit for consistent stone sizing
  * @param {number} value - The value
  * @param {string} unit - The unit
  * @param {number} decimals - Number of decimal places
@@ -61,7 +61,37 @@ export const toFeet = (value, unit) => {
 export const formatDimension = (value, unit, decimals = 2) => {
   if (!value || isNaN(value)) return '-';
   const numValue = parseFloat(value);
-  return `${numValue.toFixed(decimals)} ${unit}`;
+  
+  // Special formatting for stone/granite measurements
+  if (numValue < 1) {
+    // For very small measurements, show 3 decimal places
+    return `${numValue.toFixed(3)} ${unit}`;
+  } else if (numValue >= 100) {
+    // For large measurements, show 1 decimal place
+    return `${numValue.toFixed(1)} ${unit}`;
+  } else {
+    // For normal measurements, show 2 decimal places
+    return `${numValue.toFixed(decimals)} ${unit}`;
+  }
+};
+
+/**
+ * Format dimension for display with proper unit abbreviations
+ * @param {number} value - The value
+ * @param {string} unit - The unit
+ * @returns {string} Formatted string with proper unit display
+ */
+export const formatDimensionDisplay = (value, unit) => {
+  if (!value || isNaN(value)) return '-';
+  
+  const unitDisplay = {
+    'in': 'in',
+    'ft': 'ft', 
+    'cm': 'cm',
+    'm': 'm'
+  };
+  
+  return formatDimension(value, unitDisplay[unit] || unit);
 };
 
 /**
