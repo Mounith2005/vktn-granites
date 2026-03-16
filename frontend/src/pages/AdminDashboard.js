@@ -113,33 +113,33 @@ function AdminDashboard() {
     };
   };
 
-  const handlePrintBill = (order) => {
-    // Generate bill HTML content
-    const billContent = generateBillHTML(order);
-    
-    // Create a temporary div to hold the bill content
-    const billContainer = document.createElement('div');
-    billContainer.innerHTML = billContent;
-    billContainer.style.position = 'fixed';
-    billContainer.style.top = '0';
-    billContainer.style.left = '0';
-    billContainer.style.width = '100%';
-    billContainer.style.height = '100%';
-    billContainer.style.backgroundColor = 'white';
-    billContainer.style.zIndex = '9999';
-    billContainer.style.padding = '20px';
-    billContainer.style.boxSizing = 'border-box';
-    
-    // Add to current page
-    document.body.appendChild(billContainer);
-    
-    // Trigger print after a short delay
-    setTimeout(() => {
-      window.print();
-      // Remove the bill container after printing
-      document.body.removeChild(billContainer);
-    }, 100);
-  };
+  // const handlePrintBill = (order) => {
+  //   // Generate bill HTML content
+  //   const billContent = generateBillHTML(order);
+  //   
+  //   // Create a temporary div to hold the bill content
+  //   const billContainer = document.createElement('div');
+  //   billContainer.innerHTML = billContent;
+  //   billContainer.style.position = 'fixed';
+  //   billContainer.style.top = '0';
+  //   billContainer.style.left = '0';
+  //   billContainer.style.width = '100%';
+  //   billContainer.style.height = '100%';
+  //   billContainer.style.backgroundColor = 'white';
+  //   billContainer.style.zIndex = '9999';
+  //   billContainer.style.padding = '20px';
+  //   billContainer.style.boxSizing = 'border-box';
+  //   
+  //   // Add to current page
+  //   document.body.appendChild(billContainer);
+  //   
+  //   // Trigger print after a short delay
+  //   setTimeout(() => {
+  //     window.print();
+  //     // Remove the bill container after printing
+  //     document.body.removeChild(billContainer);
+  //   }, 100);
+  // };
 
   const handleEditBill = (order) => {
     // Prepare editable bill data

@@ -41,7 +41,7 @@ function Contact() {
     setSuccess(false);
 
     try {
-      const response = await axios.post('/api/inquiries', formData);
+      await axios.post('/api/inquiries', formData);
       setSuccess(true);
       setFormData({
         name: '',

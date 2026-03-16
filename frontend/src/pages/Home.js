@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, Star, Award, Users, Sparkles } from 'lucide-react';
+import { ArrowRight, CheckCircle, Award, Users, Sparkles } from 'lucide-react';
 import Gallery from '../components/Gallery';
-import realImages from '../data/realImages';
 import './Home.css';
 
 function Home() {
