@@ -462,6 +462,7 @@ function AdminDashboard() {
     `;
   };
 
+  // eslint-disable-next-line no-unused-vars
   const generateBillHTML = (order) => {
   const orderDate = new Date(order.orderDate).toLocaleDateString('en-US', {
     weekday: 'long',
