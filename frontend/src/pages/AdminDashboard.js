@@ -463,19 +463,21 @@ function AdminDashboard() {
   };
 
   const generateBillHTML = (order) => {
-    const orderDate = new Date(order.orderDate).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    
-    const deliveryDate = order.deliveryDate ? new Date(order.deliveryDate).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }) : 'Not set';
+  const orderDate = new Date(order.orderDate).toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  const deliveryDate = order.deliveryDate
+    ? new Date(order.deliveryDate).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    : 'Not set';
 
     // Calculate bill details
     const items = order.items.map((item, index) => {
